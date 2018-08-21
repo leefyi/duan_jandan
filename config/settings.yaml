@@ -1,0 +1,4 @@
+conf:
+  username: [host email address]
+  password: [host password]
+  page: 10

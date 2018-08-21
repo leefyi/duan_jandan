@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: zmail
+Version: 0.1.10
+Summary: Zmail allows you to send and get emails as possible as it can be in python
+Home-page: https://github.com/ZYunH/zmail
+Author: ZYunH
+Author-email: zyunhjob@163.com
+License: MIT Licence
+Keywords: email python3 package
+Platform: all
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: Implementation
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+
+Zmail allows you to send and get emails as possible as it can be in python.There is no need to check server address or make your own MIME string.With zmail, you only need to care about your mail content.
+
+
