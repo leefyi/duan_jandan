@@ -14,6 +14,8 @@ pip install -r requirements.txt
     requests-html
     apscheduler
     zmail
+    bottle
+    
 其它依赖会自动安装
 
 启动：
