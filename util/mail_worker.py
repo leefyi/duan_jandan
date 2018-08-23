@@ -34,6 +34,8 @@ def send_duan(typet='txt'):
     base = os.path.abspath(os.path.join(package_dir, '..'))
     if typet == 'txt':
         file_name = 'new_10.txt'
+    elif typet == 'html':
+        file_name = 'new_10.html'
     else:
         file_name = 'new_10.md'
     attach_path = os.path.join(base, file_name)
@@ -48,4 +50,3 @@ def send_duan(typet='txt'):
     # 状态zserver.smtp_able()
     # 发送
     zserver.send_mail(username, mail_content)
-

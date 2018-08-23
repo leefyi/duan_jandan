@@ -13,6 +13,7 @@
 from requests_html import HTMLSession
 from util import file_generator, mail_worker
 from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 BASE_URL = 'http://jandan.net/duan/'
 new_page = 0
@@ -83,9 +84,10 @@ def reveal_details(duan_element):
 # 爬取信息主程序，默认10页
 
 
-def loot(range_count=1):
+def loot(range_count=10):
     # 获取最新页码
     current_page = get_current_page(url=BASE_URL)
+    print('current:', current_page)
     # session会智能地关闭，暂时不要费心这个
     loot_session = create_session()
     # 存储段子和其它信息的字典，key为段子id,形如3936569
@@ -100,31 +102,52 @@ def loot(range_count=1):
         for d in duan_block:
             temp = reveal_details(d)
             index = temp[0]
+            print(index)
             duan_dict[index] = temp
     return duan_dict
 
 
 def job():
     result = loot(10)
-    file_generator.duan_header()
-    file_generator.duan_write(result)
+    file_generator.duan_header_txt()
+    file_generator.duan_write_txt(result)
+    file_generator.duan_write_html(result)
+    type_file = 'html'
+    mail_worker.send_duan(type_file)
+
+
+def job2():
+    result = loot(10)
+    file_generator.duan_header_txt()
+    file_generator.duan_write_txt(result)
     type_file = 'txt'
     mail_worker.send_duan(type_file)
 
 
 # if __name__ == '__main__':
-#     result = loot(10)
-#     file_generator.duan_header()
-#     file_generator.duan_write(result)
-#     type_file = 'txt'
-#     mail_worker.send_duan(type_file)
+#
+#     # 粗糙简略的定时任务，太晚了，有空再弄个更灵活的
+#     # 阻塞调度器
+#     scheduler = BlockingScheduler()
+#     # 该示例中的定时任务采用cron（cron）的方式，每一天执行一次。
+#     scheduler.add_job(job, 'cron', day='*/1')
+#     scheduler.start()
 
-if __name__ == '__main__':
+# 定时任务调度入口
+def sched():
 
     # 粗糙简略的定时任务，太晚了，有空再弄个更灵活的
     # 阻塞调度器
     scheduler = BlockingScheduler()
-    # 该示例中的定时任务采用固定时间间隔（interval）的方式，每一天执行一次。
-    # 并且还为该任务设置了一个任务id
-    scheduler.add_job(job, 'interval', days=1, id='job')
+    # 该示例中的定时任务采用cron（cron）的方式，每一天执行一次。
+    scheduler.add_job(job, 'cron', day='*/1')
     scheduler.start()
+
+
+if __name__ == '__main__':
+    result = loot(10)
+    file_generator.duan_header_txt()
+    file_generator.duan_write_txt(result)
+    file_generator.duan_write_html(result)
+    type_file = 'html'
+    mail_worker.send_duan(type_file)
